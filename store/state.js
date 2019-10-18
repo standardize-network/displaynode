@@ -38,7 +38,7 @@ poolNames: [
     id: 'c8571f67f8032b7d62598a3f09c09242e3d363830394f4557f0cc432428839e8'
   },
   {
-    name: 'Rick McCr₳cken',
+    name: 'Digital Fortress',
     id: 'dd6e16b6aaed7bebb4b970d48ca651b9b5ded098ed3e34b27c5604d46d489a10'
   },
   {
