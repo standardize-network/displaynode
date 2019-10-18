@@ -1,0 +1,29 @@
+
+/* ICONS */
+.iconContainerSpaceAround {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.iconContainerSpaceBetween {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.smallIcon {
+  font-size: 1em;
+}
+.mediumIcon {
+  font-size: 2em;
+}
+.largeIcon {
+  font-size: 4em;
+}
+.subPageHeader {
+  font-weight: 400;
+  font-size: 5em;
+  text-align: center;
+  padding-top: 0.5em;
+  color: #dedeff;
+  font-family: 'Big Shoulders Display', cursive;
+}

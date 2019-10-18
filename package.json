@@ -1,0 +1,30 @@
+{
+  "name": "displaynode",
+  "version": "0.1.0",
+  "description": "node monitoring and blockchain explorer",
+  "author": "standardize network",
+  "private": true,
+  "config": {
+    "nuxt": {
+      "host": "localhost",
+      "port": 8080
+    }
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "ant-design-vue": "^1.4.1",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "moment": "^2.24.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^1.0.0"
+  }
+}
