@@ -58,6 +58,7 @@ export default {
   },
   proxy: {
     '/api/': { target: 'http://QUERYNODE-IP:QUERYNODE-PORT', pathRewrite: {'^/api/': ''} },
+    '/localapi/': { target: 'http://127.0.0.1:3101', pathRewrite: {'^/localapi/': ''} },
   },
   /*
   ** Build configuration

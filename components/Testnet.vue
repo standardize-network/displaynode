@@ -8,7 +8,8 @@
       <section class="moduleContainer">
 
         <div id="splittViewRow">
-          <Settings id="settingsContainer" :restartInterval="restartInterval" :enableInterval="enableInterval" :disableInterval="disableInterval"/>
+          <Settings id="settingsContainer" v-if="this.$store.state.settings.standalone === false" :restartInterval="restartInterval" :enableInterval="enableInterval" :disableInterval="disableInterval"/>
+          <Settings id="settingsContainer" v-if="this.$store.state.settings.standalone === true" :restartInterval="restartIntervalLocal" :enableInterval="enableIntervalLocal" :disableInterval="disableIntervalLocal"/>
         </div>
 
         <div id="splittViewRow">
@@ -80,8 +81,13 @@ export default {
     }
   },
   async mounted() {
-    this.refreshApiData();
-    this.refreshIntervalFn = this.returnIntervalFn();
+    if (this.$store.state.settings.standalone === true) {
+      this.refreshApiDataLocally();
+      this.refreshIntervalFn = this.returnIntervalLocalFn();
+    } else {
+      this.refreshApiData();
+      this.refreshIntervalFn = this.returnIntervalFn();
+    }
   },
   methods: {
     enableInterval() {
@@ -100,23 +106,81 @@ export default {
       }, this.$store.state.settings.refreshInterval * 1000);
       return interval;
     },
+    enableIntervalLocal() {
+      this.refreshIntervalFn = this.returnIntervalLocalFn();
+    },
+    disableIntervalLocal() {
+      window.clearInterval(this.refreshIntervalFn);
+    },
+    restartIntervalLocal() {
+      window.clearInterval(this.refreshIntervalFn);
+      this.refreshIntervalFn = this.returnIntervalLocalFn();
+    },
+    returnIntervalLocalFn() {
+      let interval = window.setInterval(() => {
+        this.refreshApiDataLocally();
+      }, this.$store.state.settings.refreshInterval * 1000);
+      return interval;
+    },
     async refreshApiData() {
       try {
 
-        let nodeStatDataFin = await this.$axios.get('/api/nodestats');
-        this.nodeStats = nodeStatDataFin.data;
+        let nodeStatData = await this.$axios.get('/api/nodestats');
+        this.nodeStats = nodeStatData.data;
 
-        let mempoolFin = await this.$axios.get('/api/fragmentlogs');
-        this.mempool = mempoolFin.data;
+        let mempool = await this.$axios.get('/api/fragmentlogs');
+        this.mempool = mempool.data;
 
-        let stakePoolDistributionFin = await this.$axios.get('/api/stake');
-        this.stakePoolDistribution = stakePoolDistributionFin.data.stake;
+        let stakePoolDistribution = await this.$axios.get('/api/stake');
+        this.stakePoolDistribution = stakePoolDistribution.data.stake;
 
-        let transactionsFin = await this.$axios.get('/api/transactions');
-        this.transactions = transactionsFin.data;
+        let transactions = await this.$axios.get('/api/transactions');
+        this.transactions = transactions.data;
 
-        let leadersFin = await this.$axios.get('/api/leaders');
-        this.leaders = leadersFin.data;
+        let leaders = await this.$axios.get('/api/leaders');
+        this.leaders = leaders.data;
+
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async refreshApiDataLocally() {
+      try {
+
+        let nodeStatData = await this.$axios.get('/localapi/api/v0/node/stats', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.nodeStats = nodeStatData.data;
+
+        let mempool = await this.$axios.get('/localapi/api/v0/fragment/logs', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.mempool = mempool.data;
+
+        let stakePoolDistribution = await this.$axios.get('/localapi/api/v0/stake', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.stakePoolDistribution = stakePoolDistribution.data.stake;
+
+        let transactions = await this.$axios.get('/localapi/api/v0/utxo', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.transactions = transactions.data;
+
+        let leaders = await this.$axios.get('/localapi/api/v0/leaders', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.leaders = leaders.data;
 
       } catch (err) {
         console.log(err);

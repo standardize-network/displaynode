@@ -6,7 +6,7 @@ settings: {
   refreshEnabled: true,
   nodeMonitorEnabled: true,
   explorerEnabled: true,
-  standalone: false
+  standalone: true
 },
 poolNames: [
   {

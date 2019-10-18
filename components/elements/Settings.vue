@@ -3,7 +3,7 @@
     <h3 style="text-align:center;margin-bottom:1em;color:#dedeff;">Settings</h3>
 
     <span><b>Refresh Interval:</b><b style="float:right;padding-bottom:1em,">{{ settings.refreshInterval }} seconds</b></span>
-    <input type="range" min="5" max="60" class="slider" id="myRange" v-model="localRefreshInterval" @change="writeChangeToStore('refreshInterval', localRefreshInterval);restartInterval()">
+    <input type="range" min="1" max="60" class="slider" id="myRange" v-model="localRefreshInterval" @change="writeChangeToStore('refreshInterval', localRefreshInterval);restartInterval()">
     <div class="m3">
 
       <button v-if="settings.refreshEnabled" @click="writeChangeToStore('refreshEnabled', !$store.state.settings.refreshEnabled);disableInterval()" style="width:100%;" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
