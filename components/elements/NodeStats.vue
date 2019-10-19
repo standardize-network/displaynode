@@ -63,16 +63,11 @@ export default {
     nodeType: String
   },
   methods: {
-    pad(num) {
-      return ("0"+num).slice(-2);
-    },
-    hhmmss(secs) {
-      let minutes = Math.floor(secs / 60);
-      secs = secs%60;
-      let hours = Math.floor(minutes/60)
-      minutes = minutes%60;
-      return `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(secs)}`;
-      // return pad(hours)+":"+pad(minutes)+":"+pad(secs); for old browsers
+    hhmmss(seconds) {
+      const arr = new Date(seconds * 1000).toISOString().substr(11, 8).split(':');
+      const days = Math.floor(seconds / 86400);
+      arr[0] = parseInt(arr[0], 10) + days * 24;
+      return arr.join(':');
     }
   },
   computed: {
