@@ -1,6 +1,8 @@
 # displaynode
 _node monitoring and blockchain explorer_
 
+Find a [DEMO](standardize.network) on our website!
+
 ### Before you start:
 
 This is a node.js application to monitor Jörmungandr testnet data. It can be used either on the same machine the Jörmungandr-node is running, or on every remote server in connection with a [querynode](https://github.com/standardize-network/querynode) instance. This is useful if you want to monitor your node locally, with Jörmungandr on a server somewhere, or if host the displaynode somewhere else, e.g. on a webserver.
