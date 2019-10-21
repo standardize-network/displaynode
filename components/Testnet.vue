@@ -276,12 +276,12 @@ p {
 }
 .pageWrapperNodeMonitor {
   padding-bottom: 2em;
-  background-color: #2e2e2e;
+  background-color: #1e1e1e;
   color: #dedeff;
 }
 .pageWrapperTestnet {
   padding-bottom: 2em;
-  background-color: #1e1e1e;
+  background-color: #2e2e2e;
   color: #dedeff;
 }
 .moduleContainer {
