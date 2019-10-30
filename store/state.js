@@ -15,11 +15,11 @@ poolNames: [
   },
   {
     name: 'IOHK',
-    id: 'da2d5f25f4d538b7a2c99ef41d2127444428de19be327282473db763442ad61d'
+    id: 'f3b35041dda7a98eb3f7ac7cb24eb8344875c33fc54781b51e2372745720584a'
   },
   {
     name: 'IOHK',
-    id: '53a1d75955eff9891f72d6ade78b45a9c6ca8e0f7498ef29e8b4fdcb5f13aa94'
+    id: '3b83a5af4ad23f5cddc2806569adc054aa1282d836ca59bc5153a35efbdba3f6'
   },
   {
     name: 'StakeNuts',
@@ -62,20 +62,20 @@ poolNames: [
     id: '6d8509b50dc9612f6db5f899f2b24d486479b61f158fd7cb9a271553c923018a'
   },
   {
-    name: 'Joel',
-    id: 'eff89d4c3d0c6d1841525d7231ff45f5242849f2f8f84626a123ceab88ee56fc'
+    name: 'Mike',
+    id: '856a3f872a7a9c46c5bee5f057f6a19b5cf46e1aedfda64585aec8abdcb6a0c6'
   },
   {
-    name: 'Ron',
-    id: '5b38b5841032d1440a7f3e011e414872fc1e778c2464cf117594e2ab2f7bcb5e'
+    name: 'Kevin H',
+    id: 'e4a8ed58aed5584dfc398ba7a474c5f4f75fbda70647abb2792d151a56bfa87a'
   },
   {
     name: 'm00n armADA',
     id: 'fbb57e345d108552fb252e7ef7d6b5be93ef6b651d00f06d22f35b1e42cc88ba'
   },
   {
-    name: 'K H',
-    id: '33fdfdc7331c0b3ae85d883c505d39c007e0eb42fd41b886b8bf664459353a83'
+    name: 'Adagial',
+    id: 'a15aed837001237f092298558776ad8cbe8e3e83e17eb4b07009bc55936eb5af'
   },
   {
     name: 'K H',
@@ -88,6 +88,26 @@ poolNames: [
   {
     name: '🄾🄲🄶🀄️',
     id: '0f30fcf32277b69afe537d6af47f9ebc04955e8ea138d703981cc7420bab5290'
+  },
+  {
+    name: 'Kyle Solomon',
+    id: '46bc23204cc9387eaff6cafe43f56182f8beceb6a6a1f4de499aca99e662e681'
+  },
+  {
+    name: 'Régis',
+    id: '8cf74f03133f93dfb1239f2c0d3f57246b72b6bcbb0cdd12bd6ad7333d152639'
+  },
+  {
+    name: 'Adagial',
+    id: '6bbd15da6685b199f2f404b657fdabac9c4adea3ab2b387c4981864bf646d22a'
+  },
+  {
+    name: 'Pegasus',
+    id: 'b858553adf0f6f79b9faedaf4b9ede3cb546cdc2e3afb49f2954aa33b7d793e1'
+  },
+  {
+    name: 'wunderbaer',
+    id: '2e1e0912f3bf35b510895d2de8cd3465a0d73b48f52550bf2c3a15baf3ba5837'
   }
 ]
 
