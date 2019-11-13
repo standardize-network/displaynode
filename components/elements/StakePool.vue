@@ -17,7 +17,7 @@
 export default {
   props: {
     pool: Array,
-    resolvePoolId: Function,
+    poolNames: Array,
     getAdaValue: Function,
     poolIndex: Number,
     sumAllAtStake: Number,
@@ -37,6 +37,17 @@ export default {
         padding: '0.5em',
         backgroundColor: 'rgba(44, 57, 92, 0.3)',
       },
+    }
+  },
+  methods: {
+    resolvePoolId(id) {
+      let name = '';
+      for (let i = 0; i < this.poolNames.length; i++) {
+        if (id === this.poolNames[i].id) {
+          name = this.poolNames[i].name;
+        }
+      }
+      return name;
     }
   },
   computed: {

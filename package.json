@@ -1,6 +1,6 @@
 {
   "name": "displaynode",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "node monitoring and blockchain explorer",
   "author": "standardize network",
   "private": true,

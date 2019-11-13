@@ -32,7 +32,17 @@
       </section>
       <!-- <p style="text-align:center;">Node Info:</p> -->
       <section class="nodeStatsElement">
-        <span>uptime: <b style="float:right;">{{ hhmmss(nodeStats.uptime) }}</b></span><br>
+        <div class="iconContainerSpaceBetween">
+          <span>State: </span>
+          <b style="float:right;font-size:20px;color:green;" v-if="nodeStats.state === 'Running'">{{ nodeStats.state }}</b>
+          <b style="float:right;font-size:20px;color:lightgreen;" v-if="nodeStats.state === 'StartingRestServer'">{{ nodeStats.state }}</b>
+          <b style="float:right;font-size:20px;color:lightblue;" v-if="nodeStats.state === 'PreparingStorage'">{{ nodeStats.state }}</b>
+          <b style="float:right;font-size:20px;color:lightblue;" v-if="nodeStats.state === 'PreparingBlock0'">{{ nodeStats.state }}</b>
+          <b style="float:right;font-size:20px;color:blue;" v-if="nodeStats.state === 'Bootstrapping'">{{ nodeStats.state }}</b>
+          <b style="float:right;font-size:20px;color:orange;" v-if="nodeStats.state === 'StartingWorkers'">{{ nodeStats.state }}</b>
+        </div>
+
+        <span>Uptime: <b style="float:right;">{{ hhmmss(nodeStats.uptime) }}</b></span><br>
         <span>Blocks received: <b style="float:right;">{{ nodeStats.blockRecvCnt }}</b></span><br>
         <span>TX received: <b style="float:right;">{{ nodeStats.txRecvCnt }}</b></span><br>
       </section>

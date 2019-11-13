@@ -13,6 +13,16 @@
       <button v-else @click="writeChangeToStore('refreshEnabled', !$store.state.settings.refreshEnabled);enableInterval()" style="width:100%;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full">
         Enable Refresh
       </button>
+
+
+      <button v-if="$store.state.settings.mempoolEnabled" @click="writeChangeToStore('mempoolEnabled', !$store.state.settings.mempoolEnabled);restartInterval()" style="width:100%;margin-top:0.25em;" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded-full">
+        Disable Mempool
+      </button>
+
+      <button v-else @click="writeChangeToStore('mempoolEnabled', !$store.state.settings.mempoolEnabled);restartInterval()" style="width:100%;margin-top:0.25em;" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded-full">
+        Enable Mempool (can take some time)
+      </button>
+
     </div>
   </div>
 </template>

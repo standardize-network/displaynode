@@ -7,16 +7,16 @@
 
       <section class="moduleContainer">
 
-        <div id="splittViewRow">
+        <div class="splittViewRow">
           <Settings id="settingsContainer" v-if="this.$store.state.settings.standalone === false" :restartInterval="restartInterval" :enableInterval="enableInterval" :disableInterval="disableInterval"/>
           <Settings id="settingsContainer" v-if="this.$store.state.settings.standalone === true" :restartInterval="restartIntervalLocal" :enableInterval="enableIntervalLocal" :disableInterval="disableIntervalLocal"/>
         </div>
 
-        <div id="splittViewRow">
+        <div class="splittViewRow">
           <NodeStats v-if="nodeStats.lastBlockHeight" :nodeStats="nodeStats" :momentCalDate="momentCalDate" :momentWithSeconds="momentWithSeconds" :country="'Location'" :nodeType="'Pool Name'" id="settingsContainer"/>
         </div>
 
-        <div id="splittViewRow">
+        <div class="splittViewRow" v-if="$store.state.settings.mempoolEnabled">
           <Mempool :mempool="mempool" :nodeName="''" :momentCalDate="momentCalDate" :momentWithSeconds="momentWithSeconds" id="settingsContainer"/>
         </div>
 
@@ -29,16 +29,16 @@
 
       <section class="moduleContainer">
 
-        <Transactions :transactions="transactions" :getAdaValue="getAdaValue" :sumAllTransferred="sumAllTransferred" id="transactionContainer"/>
+        <!-- <Transactions :transactions="transactions" :getAdaValue="getAdaValue" :sumAllTransferred="sumAllTransferred" id="transactionContainer"/> -->
 
         <div class="testnetContainerElement">
           <h3 style="text-align:center;margin-bottom:1em;color:#dedeff;">Stakepool Distribution</h3>
 
-          <StakePool v-if="pool[1] != 0" v-for="(pool, index) in sortStakePoolDistribution" :key="index" :poolIndex="index" :pool="pool" :resolvePoolId="resolvePoolId" :getAdaValue="getAdaValue" :sumAllAtStake="sumAllAtStake" :leaders="leaders"/>
+          <StakePool v-if="pool[1] != 0" v-for="(pool, index) in sortStakePoolDistribution" :key="index" :poolIndex="index" :pool="pool" :poolNames="poolNames" :getAdaValue="getAdaValue" :sumAllAtStake="sumAllAtStake" :leaders="leaders"/>
           <br>
           <a-collapse>
             <a-collapse-panel header="Show Stake pools without associated Stake" key="1" style="background-color:rgba(44, 57, 92, 1);">
-              <StakePool v-if="pool[1] === 0" v-for="(pool, index) in sortStakePoolDistribution" :key="index" :poolIndex="index" :pool="pool" :resolvePoolId="resolvePoolId" :getAdaValue="getAdaValue" :sumAllAtStake="sumAllAtStake" :leaders="leaders"/>
+              <StakePool v-if="pool[1] === 0" v-for="(pool, index) in sortStakePoolDistribution" :key="index" :poolIndex="index" :pool="pool" :poolNames="poolNames" :getAdaValue="getAdaValue" :sumAllAtStake="sumAllAtStake" :leaders="leaders"/>
             </a-collapse-panel>
           </a-collapse>
         </div>
@@ -77,6 +77,7 @@ export default {
       poolsWithoutStake: [],
       transactions: [],
       leaders: [],
+      poolNames: [],
       refreshIntervalFn: {}
     }
   },
@@ -128,17 +129,23 @@ export default {
         let nodeStatData = await this.$axios.get('/api/nodestats');
         this.nodeStats = nodeStatData.data;
 
-        let mempool = await this.$axios.get('/api/fragmentlogs');
-        this.mempool = mempool.data;
+        if (this.$store.state.settings.mempoolEnabled === true) {
+          let mempool = await this.$axios.get('/api/fragmentlogs');
+          this.mempool = mempool.data;
+        }
 
         let stakePoolDistribution = await this.$axios.get('/api/stake');
         this.stakePoolDistribution = stakePoolDistribution.data.stake;
 
-        let transactions = await this.$axios.get('/api/transactions');
-        this.transactions = transactions.data;
-
         let leaders = await this.$axios.get('/api/leaders');
         this.leaders = leaders.data;
+
+        let poolNamesResult = await this.$axios.get('https://raw.githubusercontent.com/standardize-network/stake-pool-names/master/stake-pools-official-nightly.json', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.poolNames = poolNamesResult.data;
 
       } catch (err) {
         console.log(err);
@@ -154,12 +161,15 @@ export default {
         });
         this.nodeStats = nodeStatData.data;
 
-        let mempool = await this.$axios.get('/localapi/api/v0/fragment/logs', {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        this.mempool = mempool.data;
+        if (this.$store.state.settings.mempoolEnabled === true) {
+          let mempool = await this.$axios.get('/localapi/api/v0/fragment/logs', {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          this.mempool = mempool.data;
+        }
+
 
         let stakePoolDistribution = await this.$axios.get('/localapi/api/v0/stake', {
           headers: {
@@ -168,19 +178,19 @@ export default {
         });
         this.stakePoolDistribution = stakePoolDistribution.data.stake;
 
-        let transactions = await this.$axios.get('/localapi/api/v0/utxo', {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        this.transactions = transactions.data;
-
         let leaders = await this.$axios.get('/localapi/api/v0/leaders', {
           headers: {
             'Content-Type': 'application/json'
           }
         });
         this.leaders = leaders.data;
+
+        let poolNamesResult = await this.$axios.get('https://raw.githubusercontent.com/standardize-network/stake-pool-names/master/stake-pools-official-nightly.json', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        this.poolNames = poolNamesResult.data;
 
       } catch (err) {
         console.log(err);
@@ -196,15 +206,6 @@ export default {
     },
     getAdaValue(lovelace) {
       return lovelace / 1000000;
-    },
-    resolvePoolId(id) {
-      let name = '';
-      for (let i = 0; i < this.$store.state.poolNames.length; i++) {
-        if (id === this.$store.state.poolNames[i].id) {
-          name = this.$store.state.poolNames[i].name;
-        }
-      }
-      return name;
     }
   },
   computed: {
@@ -325,7 +326,7 @@ p {
 }
 
 
-#splittViewRow {
+.splittViewRow {
   display: flex;
   flex-wrap: wrap;
   min-width: 98.9vw;
@@ -357,7 +358,7 @@ p {
 }
 
 @media screen and (max-width: 1100px) {
-  #splittViewRow {
+  .splittViewRow {
     display: flex;
     flex-wrap: wrap;
     min-width: 96vw;
@@ -423,7 +424,7 @@ p {
 }
 
 @media screen and (max-width: 600px) {
-  #splittViewRow {
+  .splittViewRow {
     display: flex;
     flex-wrap: wrap;
     min-width: 100%;
