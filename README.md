@@ -1,7 +1,7 @@
 # displaynode
 _node monitoring and blockchain explorer_
 
-Find a [DEMO](standardize.network) on our website!
+Find a [DEMO](http://privtest1.standardize.network/) here!
 
 ### Before you start:
 
